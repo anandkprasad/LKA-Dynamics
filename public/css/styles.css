@@ -90,6 +90,18 @@
     --font-mono : Consolas, "Andale Mono", Courier, "Courier New", monospace;
 }
 
+@keyframes cubeDrift {
+    0% { transform: rotate3d(0, 0, 1, 0deg) rotate(0deg) scale(1); }
+    25% { transform: rotate3d(1, 0.2, 0, 25deg) rotate(90deg) scale(1.05); }
+    50% { transform: rotate3d(0.2, 1, 0, 35deg) rotate(180deg) scale(0.95); }
+    75% { transform: rotate3d(0, 0.8, 0.2, 15deg) rotate(270deg) scale(1.02); }
+    100% { transform: rotate3d(0.6, 0.2, 0.4, 30deg) rotate(360deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .s-intro__cube { animation: none !important; }
+}
+
 /* ------------------------------------------------------------------- 
  * ## colors
  * ------------------------------------------------------------------- */
@@ -3160,10 +3172,15 @@ img.u-pull-left {
     bottom              : 0;
     width               : 100%;
     height              : 100%;
-    background-image    : url(../images/hero-bg.jpg);
+    /* Animated gradient background replacing static image */
+    background          : radial-gradient(1200px 600px at 10% 20%, rgba(0, 170, 255, 0.18), transparent 60%),
+                          radial-gradient(1000px 500px at 90% 30%, rgba(255, 0, 180, 0.14), transparent 60%),
+                          radial-gradient(800px 400px at 30% 80%, rgba(255, 200, 0, 0.10), transparent 60%),
+                          linear-gradient(180deg, #05070a 0%, #0a0f1a 100%);
     background-repeat   : no-repeat;
-    background-position : center 30%;
-    background-size     : cover;
+    background-size     : 160% 160%, 160% 160%, 140% 140%, cover;
+    background-position : 0% 0%, 100% 20%, 30% 80%, center;
+    animation           : heroGradientShift 22s ease-in-out infinite alternate;
 }
 
 .s-intro__bg::before {
@@ -3176,29 +3193,64 @@ img.u-pull-left {
     bottom         : 0;
     width          : 100%;
     height         : 100%;
-    background     : var(--color-gray-15);
+    /* Merge both overlays here using layered backgrounds with alpha */
+    background     : linear-gradient(0deg, rgba(0, 0, 0, 0.18) 15%, rgba(0, 0, 0, 0) 100%),
+                     rgba(255, 255, 255, 0.10);
     pointer-events : none;
-    opacity        : .1;
 }
 
-.s-intro__bg::after {
-    display        : block;
-    content        : "";
-    position       : absolute;
-    top            : 0;
-    left           : 0;
-    right          : 0;
-    bottom         : 0;
-    width          : 100%;
-    height         : 100%;
-    background     : linear-gradient(0deg, black 15%, rgba(0, 0, 0, 0) 100%);
-    pointer-events : none;
-    opacity        : .1;
+.s-intro__cube {
+    position          : absolute;
+    top               : 0;
+    left              : 0;
+    width             : 100px; /* default; overridden inline */
+    height            : 100px; /* default; overridden inline */
+    pointer-events    : none;
+    background        : linear-gradient(135deg, rgba(0, 200, 255, 0.15), rgba(255, 0, 180, 0.10));
+    box-shadow        : 0 0 24px rgba(0, 200, 255, 0.25), 0 0 48px rgba(255, 0, 180, 0.15) inset;
+    border            : 2px solid rgba(255, 255, 255, 0.25);
+    border-radius     : 6px;
+    mix-blend-mode    : screen;
+    opacity           : 0.35;
+    transform-origin  : center;
+    will-change       : transform;
 }
 
 /* --------------------------------------------------------------------
  * ## intro content
  * -------------------------------------------------------------------- */
+.s-intro__bg,
+.s-intro__bg::before,
+.s-intro__bg::after {
+    z-index: 0;
+}
+
+@keyframes heroGradientShift {
+    0% {
+        background-position: 0% 0%, 100% 20%, 30% 80%, center;
+        filter: saturate(1) hue-rotate(0deg);
+    }
+    50% {
+        background-position: 20% 30%, 80% 10%, 40% 70%, center;
+        filter: saturate(1.05) hue-rotate(10deg);
+    }
+    100% {
+        background-position: 40% 60%, 60% 0%, 50% 60%, center;
+        filter: saturate(1.1) hue-rotate(20deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .s-intro__bg {
+        animation: none;
+        background: radial-gradient(1200px 600px at 15% 25%, rgba(0, 170, 255, 0.16), transparent 60%),
+                    radial-gradient(1000px 500px at 85% 35%, rgba(255, 0, 180, 0.12), transparent 60%),
+                    linear-gradient(180deg, #05070a 0%, #0a0f1a 100%);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+}
 .s-intro__content {
     z-index         : 1;
     height          : 100%;
@@ -3210,6 +3262,17 @@ img.u-pull-left {
     text-align      : center;
     position        : relative;
 }
+
+/* Chrome Dino overlay (canvas). Positioned behind the hero title */
+.dino-runner {
+    position       : absolute;
+    left           : 0;
+    transform      : none;
+    top            : calc(18vh + 1.5rem);
+    pointer-events : none;
+    z-index        : 0;
+}
+.dino-runner canvas { display: block; }
 
 .s-intro__pretitle {
     font-weight    : 500;
@@ -4023,6 +4086,53 @@ img.u-pull-left {
     color : var(--color-1);
 }
 
+/* light variant for contact section */
+.s-contact.s-contact--light {
+    --color-border   : rgba(0, 0, 0, .08);
+    background-color : var(--color-white);
+    background-image : none;
+}
+
+.s-contact.s-contact--light::before {
+    display : none;
+}
+
+.s-contact.s-contact--light h5 {
+    color : var(--color-text-light);
+}
+
+.s-contact.s-contact--light .s-contact__infos {
+    color : var(--color-text);
+}
+
+.s-contact.s-contact--light .s-contact__list a {
+    color : var(--color-2);
+}
+
+.s-contact.s-contact--light .s-contact__list a:focus,
+.s-contact.s-contact--light .s-contact__list a:hover {
+    color : var(--color-1);
+}
+
+.s-contact.s-contact--light .s-contact__subscribe input[type="email"] {
+    background-color : var(--color-gray-4);
+    color            : var(--color-text);
+    border           : 1px solid rgba(0, 0, 0, .08);
+}
+
+.s-contact.s-contact--light .btn--mail {
+    color : var(--color-1);
+}
+
+/* ensure headings are readable on light background */
+.s-contact.s-contact--light .text-display-title {
+    color : var(--color-text-dark);
+}
+
+.s-contact.s-contact--light .text-pretitle {
+    color : var(--color-text-light);
+}
+
 /* ------------------------------------------------------------------- 
  * ## contact infos
  * ------------------------------------------------------------------- */
@@ -4235,6 +4345,11 @@ img.u-pull-left {
 .s-footer a:focus,
 .s-footer a:hover {
     color : var(--color-1);
+}
+
+/* ensure go-top SVG icon follows link color (visible on hover) */
+.s-footer a svg {
+    fill : currentColor !important;
 }
 
 /* ------------------------------------------------------------------- 

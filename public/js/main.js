@@ -83,6 +83,435 @@
     }; // end ssParallax
 
 
+    /* matrix background (digital rain)
+    * -------------------------------------------------- */
+    const ssMatrixBackground = function() {
+        const container = document.querySelector('.s-intro__bg');
+        if (!container) return;
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('aria-hidden', 'true');
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.pointerEvents = 'none';
+        // place as first child so it paints behind cubes
+        container.insertBefore(canvas, container.firstChild);
+
+        const ctx = canvas.getContext('2d');
+        let width = 0, height = 0, dpr = Math.max(1, window.devicePixelRatio || 1);
+        let columns = 0;
+        let drops = [];
+        let fontSize = 16;
+        let chars = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let charArr = chars.split('');
+        let lastTime = performance.now();
+
+        function resize() {
+            const rect = container.getBoundingClientRect();
+            width = Math.max(1, Math.floor(rect.width));
+            height = Math.max(1, Math.floor(rect.height));
+            canvas.width = Math.floor(width * dpr);
+            canvas.height = Math.floor(height * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            // compute font size relative to viewport
+            fontSize = Math.max(12, Math.min(22, Math.round(width / 60)));
+            ctx.font = `${fontSize}px monospace`;
+            columns = Math.ceil(width / fontSize);
+            drops = new Array(columns).fill(0).map(() => Math.random() * -20);
+        }
+
+        function step(now) {
+            const dt = (now - lastTime) / 1000;
+            lastTime = now;
+
+            // motion scale
+            const speed = prefersReducedMotion ? 15 : 30; // smaller -> slower fade trail
+
+            // translucent background for trail effect
+            ctx.fillStyle = `rgba(0, 10, 15, ${prefersReducedMotion ? 0.2 : 0.08})`;
+            ctx.fillRect(0, 0, width, height);
+
+            // draw characters
+            for (let i = 0; i < columns; i++) {
+                const text = charArr[(Math.random() * charArr.length) | 0];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                // glowing head and dim tail
+                ctx.fillStyle = 'rgba(180, 255, 180, 0.9)';
+                ctx.shadowColor = 'rgba(0,255,140,0.6)';
+                ctx.shadowBlur = 12;
+                ctx.fillText(text, x, y);
+
+                ctx.shadowBlur = 0;
+
+                // advance drop
+                if (y > height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                } else {
+                    drops[i] += (prefersReducedMotion ? 0.6 : 1.2);
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        updateEnabled();
+        resize();
+        window.addEventListener('resize', resize);
+        requestAnimationFrame(step);
+    }; // end ssMatrixBackground
+
+
+    /* hero cubes (interactive)
+    * -------------------------------------------------- */
+    const ssHeroCubes = function() {
+        const bg = document.querySelector('.s-intro__bg');
+        if (!bg) return;
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        const CUBE_COUNT = 6; // adjustable
+        const cubes = [];
+        let mouse = { x: 0.5, y: 0.5 };
+        let scrollInfluence = 0;
+        let lastScrollY = window.scrollY || 0;
+        let lastTime = performance.now();
+
+        // Create cubes
+        for (let i = 0; i < CUBE_COUNT; i++) {
+            const el = document.createElement('div');
+            el.className = 's-intro__cube';
+            const size = Math.round(60 + Math.random() * 120); // 60-180px
+            el.style.width = `${size}px`;
+            el.style.height = `${size}px`;
+            // depth layer via zIndex + opacity tweaks
+            const depth = Math.random(); // 0..1
+            el.style.opacity = String(0.22 + depth * 0.25);
+            el.style.zIndex = String(0); // stays behind text; container layering handles this
+            bg.appendChild(el);
+
+            cubes.push({
+                el,
+                size,
+                depth,
+                // normalized position (0..1) within bg
+                x: Math.random(),
+                y: Math.random(),
+                // base velocity in normalized units per second
+                vx: (Math.random() * 0.06 + 0.02) * (Math.random() < 0.5 ? -1 : 1) * (0.5 + depth),
+                vy: (Math.random() * 0.06 + 0.02) * (Math.random() < 0.5 ? -1 : 1) * (0.5 + depth),
+                rot: Math.random() * 360,
+                rotSpeed: (Math.random() * 20 - 10) * (0.5 + depth)
+            });
+        }
+
+        function updateMouse(e) {
+            const rect = bg.getBoundingClientRect();
+            mouse.x = (e.clientX - rect.left) / Math.max(1, rect.width);
+            mouse.y = (e.clientY - rect.top) / Math.max(1, rect.height);
+            mouse.x = Math.max(0, Math.min(1, mouse.x));
+            mouse.y = Math.max(0, Math.min(1, mouse.y));
+        }
+
+        window.addEventListener('mousemove', updateMouse, { passive: true });
+
+        window.addEventListener('scroll', () => {
+            const current = window.scrollY || 0;
+            const delta = current - lastScrollY;
+            lastScrollY = current;
+            // dampened influence
+            scrollInfluence += delta * 0.0005;
+            // clamp to avoid runaway
+            scrollInfluence = Math.max(-0.2, Math.min(0.2, scrollInfluence));
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+            // nothing required; positions are normalized
+        });
+
+        function animate(now) {
+            const dt = Math.min(0.05, (now - lastTime) / 1000); // cap dt to 50ms
+            lastTime = now;
+
+            const rect = bg.getBoundingClientRect();
+
+            // gentle easing of scroll influence back to 0
+            scrollInfluence *= 0.96;
+
+            cubes.forEach(c => {
+                // mouse parallax drift by depth
+                const mx = (mouse.x - 0.5) * (0.06 + c.depth * 0.12);
+                const my = (mouse.y - 0.5) * (0.06 + c.depth * 0.12);
+
+                c.x += (c.vx * dt) + mx * dt + scrollInfluence * 0.1 * dt;
+                c.y += (c.vy * dt) + my * dt - scrollInfluence * 0.2 * dt;
+                c.rot += c.rotSpeed * dt;
+
+                // wrap around with margin equal to cube size in normalized units
+                const marginX = c.size / Math.max(1, rect.width);
+                const marginY = c.size / Math.max(1, rect.height);
+
+                if (c.x < -marginX) c.x = 1 + marginX;
+                if (c.x > 1 + marginX) c.x = -marginX;
+                if (c.y < -marginY) c.y = 1 + marginY;
+                if (c.y > 1 + marginY) c.y = -marginY;
+
+                const px = c.x * rect.width - c.size / 2;
+                const py = c.y * rect.height - c.size / 2;
+                c.el.style.transform = `translate(${px}px, ${py}px) rotate(${c.rot}deg)`;
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
+    }; // end ssHeroCubes
+
+
+    /* chrome dino overlay (simple runner)
+    * -------------------------------------------------- */
+    const ssDinoRunner = function() {
+        const content = document.querySelector('.s-intro__content');
+        if (!content) return;
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        // ensure content is a positioned ancestor for absolute child placement
+        try {
+            const cs = window.getComputedStyle(content);
+            if (cs && cs.position === 'static') content.style.position = 'relative';
+        } catch (e) { /* no-op */ }
+
+        const holder = document.createElement('div');
+        holder.className = 'dino-runner';
+        const canvas = document.createElement('canvas');
+        holder.appendChild(canvas);
+        content.appendChild(holder);
+
+        const ctx = canvas.getContext('2d');
+        let width = 320;
+        let height = 90;
+        let dpr = Math.max(1, window.devicePixelRatio || 1);
+        const heroTitle = content.querySelector('.s-intro__title');
+        const heroPretitle = content.querySelector('.s-intro__pretitle');
+        const BREAKPOINT = 800; // px
+        let enabled = true;
+
+        function updateEnabled() {
+            enabled = window.innerWidth >= BREAKPOINT;
+            holder.style.display = enabled ? '' : 'none';
+        }
+
+        function resize() {
+            // scale width on small screens
+            const vw = Math.min(400, Math.max(260, Math.floor(window.innerWidth * 0.5)));
+            width = vw;
+            height = Math.round(vw * 0.28);
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            canvas.width = Math.floor(width * dpr);
+            canvas.height = Math.floor(height * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            updateEnabled();
+            positionCanvas();
+        }
+
+        // helper: get element's top relative to a given ancestor
+        function getTopRelativeTo(el, ancestor) {
+            let top = 0;
+            let node = el;
+            while (node && node !== ancestor) {
+                top += node.offsetTop || 0;
+                node = node.offsetParent;
+            }
+            return top;
+        }
+
+        // place the canvas above the pretitle ("We Are LKA Dynamics.") without overlap
+        // horizontally center over the main title text
+        function positionCanvas() {
+            if (!heroTitle && !heroPretitle) return;
+            const contentRect = content.getBoundingClientRect();
+            const anchorEl = heroPretitle || heroTitle;
+
+            // vertical: sit above pretitle with a gap
+            const gap = 16; // px
+            const anchorTop = getTopRelativeTo(anchorEl, content);
+            const desiredTop = Math.max(0, Math.round(anchorTop - height - gap));
+            holder.style.top = desiredTop + 'px';
+
+            // horizontal: center over title
+            const titleRect = (heroTitle || anchorEl).getBoundingClientRect();
+            const titleCenter = (titleRect.left - contentRect.left) + (titleRect.width / 2);
+            let desiredLeft = Math.round(titleCenter - (width / 2));
+            const maxLeft = Math.max(0, Math.floor(contentRect.width - width));
+            desiredLeft = Math.max(0, Math.min(maxLeft, desiredLeft));
+            holder.style.left = desiredLeft + 'px';
+        }
+
+        resize();
+        window.addEventListener('resize', resize);
+        // re-run positioning after layout/fonts settle
+        requestAnimationFrame(() => positionCanvas());
+        window.addEventListener('load', () => positionCanvas());
+
+        // game state
+        const groundY = height - 18;
+        const gravity = 1600; // px/s^2
+        const jumpV = 580;    // px/s
+        const speed = 220;    // px/s ground speed
+
+        const dino = {
+            x: 24,
+            y: groundY - 28,
+            w: 36,
+            h: 28,
+            vy: 0,
+            onGround: true,
+            legPhase: 0
+        };
+
+        const obstacles = [];
+        let lastSpawn = 0;
+        let spawnDelay = 1.4; // seconds
+        let lastTime = performance.now();
+
+        function spawn() {
+            const tall = Math.random() < 0.4;
+            const w = tall ? 14 : 18;
+            const h = tall ? 40 : 28;
+            obstacles.push({ x: width + 10, y: groundY - h, w, h });
+        }
+
+        function jump() {
+            if (!dino.onGround) return;
+            dino.onGround = false;
+            dino.vy = -jumpV;
+        }
+
+        // auto-jump to avoid obstacles to keep it playful without input
+        function autoJumpAhead(dt) {
+            for (let i = 0; i < obstacles.length; i++) {
+                const o = obstacles[i];
+                const timeToReach = (o.x - dino.x - dino.w) / speed; // seconds
+                if (timeToReach > 0 && timeToReach < 0.35 && dino.onGround) {
+                    jump();
+                    break;
+                }
+            }
+        }
+
+        // optional manual jump with space or tap
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') jump();
+        });
+        content.addEventListener('click', () => jump());
+
+        function drawDino() {
+            // body
+            ctx.fillStyle = '#e6e6e6';
+            ctx.fillRect(dino.x, dino.y, dino.w, dino.h);
+            // head
+            ctx.fillRect(dino.x + dino.w - 18, dino.y - 10, 16, 12);
+            // eye
+            ctx.fillStyle = '#111';
+            ctx.fillRect(dino.x + dino.w - 6, dino.y - 6, 3, 3);
+            // legs (alternating)
+            ctx.fillStyle = '#dcdcdc';
+            const legUp = (Math.floor(dino.legPhase) % 2) === 0;
+            if (legUp) {
+                ctx.fillRect(dino.x + 4, dino.y + dino.h, 6, 6);
+                ctx.fillRect(dino.x + 18, dino.y + dino.h - 4, 6, 10);
+            } else {
+                ctx.fillRect(dino.x + 4, dino.y + dino.h - 4, 6, 10);
+                ctx.fillRect(dino.x + 18, dino.y + dino.h, 6, 6);
+            }
+        }
+
+        function drawGround(offset) {
+            ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, groundY + 1);
+            ctx.lineTo(width, groundY + 1);
+            ctx.stroke();
+            // small ticks to imply motion
+            ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+            for (let x = -((offset) % 30); x < width; x += 30) {
+                ctx.beginPath();
+                ctx.moveTo(x, groundY + 3);
+                ctx.lineTo(x + 10, groundY + 3);
+                ctx.stroke();
+            }
+        }
+
+        function drawObstacle(o) {
+            // cactus base (brand yellow)
+            ctx.fillStyle = '#F9A828';
+            ctx.fillRect(o.x, o.y, o.w, o.h);
+            // inner shading (darker yellow)
+            ctx.fillStyle = '#C77F00';
+            ctx.fillRect(o.x + 3, o.y + 4, o.w - 6, o.h - 8);
+        }
+
+        function loop(now) {
+            const dt = Math.min(0.05, (now - lastTime) / 1000);
+            lastTime = now;
+
+            if (!enabled) {
+                // keep the RAF alive but skip updates/renders
+                requestAnimationFrame(loop);
+                return;
+            }
+
+            ctx.clearRect(0, 0, width, height);
+
+            // update
+            dino.legPhase += (dino.onGround ? 14 : 6) * dt;
+            dino.y += dino.vy * dt;
+            dino.vy += gravity * dt;
+            if (dino.y >= groundY - dino.h) {
+                dino.y = groundY - dino.h;
+                dino.vy = 0;
+                dino.onGround = true;
+            }
+
+            lastSpawn += dt;
+            if (lastSpawn > spawnDelay) {
+                spawn();
+                lastSpawn = 0;
+                spawnDelay = 1.2 + Math.random() * 1.0;
+            }
+
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                const o = obstacles[i];
+                o.x -= speed * dt;
+                if (o.x + o.w < 0) obstacles.splice(i, 1);
+            }
+
+            autoJumpAhead(dt);
+
+            // draw
+            drawGround(now * 0.12);
+            obstacles.forEach(drawObstacle);
+            drawDino();
+
+            requestAnimationFrame(loop);
+        }
+
+        requestAnimationFrame(loop);
+    }; // end ssDinoRunner
+
+
    /* menu on scrolldown
     * ------------------------------------------------------ */
     const ssMenuOnScrolldown = function() {
@@ -536,30 +965,28 @@
             }
         }, easeFunctions);
 
-        triggers.forEach(function(trigger) {
-            moveTo.registerTrigger(trigger);
-        });
-
-    }; // end ssMoveTo
+}; // end ssMoveTo
 
 
-   /* Initialize
-    * ------------------------------------------------------ */
-    (function ssInit() {
+/* init
+* ------------------------------------------------------ */
+const ssInit = function() {
+    ssPreloader();
+    ssParallax();
+    ssHeroCubes();
+    ssDinoRunner();
+    ssMenuOnScrolldown();
+    ssOffCanvas();
+    ssMasonry();
+    ssAnimateOnScroll();
+    ssSwiper();
+    ssPhotoswipe();
+    ssMailChimpForm();
+    ssAlertBoxes();
+    ssBackToTop();
+    ssMoveTo();
+};
 
-        ssPreloader();
-        ssParallax();
-        ssMenuOnScrolldown();
-        ssAnimateOnScroll();
-        ssOffCanvas();
-        ssMasonry();
-        ssSwiper();
-        ssPhotoswipe();
-        ssMailChimpForm();
-        ssAlertBoxes();
-        ssBackToTop();
-        ssMoveTo();
-
-    })();
+ssInit();
 
 })(document.documentElement);
