@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js" >
+<html lang="en" class="no-js">
+
 <head>
 
     <!--- basic page needs
@@ -44,32 +45,28 @@
     <div id="page" class="s-pagewrap">
 
 
-        <!-- # site header 
-        ================================================== -->
-        <header class="s-header">
+        <header class="s-header simple-navbar">
+            <div class="nav-container">
 
-           
+                <!-- Logo -->
+                <div class="nav-logo">
+                    <img src="/logo.png" alt="LKA Logo" class="logo-icon">
+                    <div class="logo-text">
+                        <span class="logo-top">LKA</span>
+                        <span class="logo-bottom">Dynamics</span>
+                    </div>
+                </div>
 
-            <a class="s-header__menu-toggle" href="#0">
-                <span class="s-header__menu-text">Menu</span>
-                <span class="s-header__menu-icon"></span>
-            </a>
+                <!-- Links -->
+                <nav class="nav-links">
+                    <a href="#intro" class="smoothscroll">Home</a>
+                    <a href="#about" class="smoothscroll">Our Mission</a>
+                </nav>
 
-            <nav class="s-header__nav">
+            </div>
+        </header>
 
-                <a href="#0" class="s-header__nav-close-btn" title="close"><span>Close</span></a>
-                <h3>LKA Dynamics.</h3>
 
-                <ul class="s-header__nav-list">
-                    <li><a href="#intro" class="smoothscroll">Intro</a></li>
-                    <li><a href="#about" class="smoothscroll">About</a></li>
-                    <li><a href="#services" class="smoothscroll">Services</a></li>
-                    <li><a href="#contact" class="smoothscroll">Contact</a></li>
-                </ul>
-
-            </nav>
-
-        </header> <!-- end s-header -->
 
 
         <!-- # site-content
@@ -88,16 +85,43 @@
                     <div class="column lg-12 s-intro__content-inner">
                         <h3 class="s-intro__pretitle">We Are LKA Dynamics.</h3>
                         <h1 class="s-intro__title">
-                        We Craft Stunning  <br>
-                        Digital Experiences.
-                        </h1>	
+                            We Craft Stunning <br>
+                            Digital Experiences.
+                        </h1>
 
-                        <div class="s-intro__more">
-                            <a class="smoothscroll btn btn--stroke s-intro__more-btn" href="#about">
-                                Learn More
-                            </a>
-                        </div>	
+
+                        <!-- Waitlist widget (homepage) -->
+                        <div class="waitlist-widget" aria-label="Join our waiting list">
+                            <h1 class="waitlist-title" style="font-size: 45PX;">Join Our Waiting List!</h1>
+                            <p class="waitlist-desc">Be part of something truly extraordinary. Join hundreds already
+                                gaining early access.</p>
+
+                            <form id="waitlist-form" class="waitlist-form" novalidate>
+                                <input id="waitlist-email" name="email" type="email" placeholder="Enter your email"
+                                    required>
+                                <button id="waitlist-submit" type="submit" class="btn btn--primary">Get
+                                    Notified</button>
+                            </form>
+
+
+
+                            <div class="waitlist-meta">
+                                <div id="waitlist-avatars" class="waitlist-avatars" aria-hidden="true">
+                                    <!-- avatars injected by JS -->
+                                </div>
+                            </div>
+
+
+                            <div id="waitlist-status" class="waitlist-status" role="status" aria-live="polite"></div>
+
+
+
+                            <div id="" class="">200+ people on the waitlist</div>
+                        </div>
+
                     </div> <!-- s-intro__content-inner -->
+
+
 
                 </div> <!-- s-intro__content -->
 
@@ -105,244 +129,431 @@
                 <div class="s-intro__scroll">
                     <a href="#about" class="smoothscroll">
                         <span>Scroll Down</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="transform: rotate(180deg);"><path d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            style="transform: rotate(180deg);">
+                            <path
+                                d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z">
+                            </path>
+                        </svg>
                     </a>
                 </div> <!-- s-intro__scroll -->
 
             </section> <!-- end s-intro -->
 
 
+            <!-- terminal demo (showcase belief in users) -->
+            <section id="terminal" class="s-terminal target-section" style="color: white; background-color: black;">
+                <div class="row s-terminal__content">
+                    <div class="column lg-12">
+
+                        <h1 style="text-align: center; color: white;">How we think?</h1>
+
+
+
+                        <p class="s-about__desc">
+
+                            We believe technology should be secure by default, scalable by design,
+                            and simple to operate — not fragile, bloated, or opaque.
+                        </p>
+
+                        <p class="s-about__desc">
+                            At <span>LKA Dynamics</span>, we don’t chase trends or ship half-baked systems.
+                            We engineer platforms that are resilient under pressure,
+                            auditable by security teams, and practical for real businesses.
+                            We empower businesses with cutting-edge technology and cybersecurity innovation.
+                        </p>
+
+
+
+
+                        <div class="terminal-wrapper">
+                            <div class="terminal-container">
+                                <div class="terminal_toolbar">
+                                    <div class="butt">
+                                        <button class="btn btn-color" aria-hidden="true"></button>
+                                        <button class="btn" aria-hidden="true"></button>
+                                        <button class="btn" aria-hidden="true"></button>
+                                    </div>
+                                    <p class="user">admin@admin: ~</p>
+                                </div>
+                                <div class="terminal_body">
+                                    <div class="terminal_promt">
+                                        <span class="terminal_user">admin@admin:</span>
+                                        <span class="terminal_location">~</span>
+                                        <span class="terminal_bling">$ Welcome to lkadynamics! We believe in you!</span>
+                                        <span class="terminal_cursor" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+
             <!-- about
             ----------------------------------------------- -->
             <section id="about" class="s-about target-section">
 
-                <div class="row s-about__content" data-animate-block>
-                    <div class="column lg-12">
-                        <h2 class="text-pretitle" data-animate-el>About LKA Dynamics</h2>
+                <div class="row s-about__content" style="margin-top: 0px;" data-animate-block>
+                    <div class="column lg-12" style="margin-top: 0px;">
+
+
+
+
                         <p class="s-about__desc" data-animate-el>
-                            <span>LKA Dynamics</span> empowers businesses with cutting-edge technology and India-first cybersecurity innovation.
+                            <span>LKA Dynamics</span> empowers businesses with cutting-edge technology and cybersecurity
+                            innovation.
                         </p>
+                        <div class="row g-4">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="top">
+                                        <div class="pfp">
+                                            <div class="playing">
+                                                <div class="greenline line-1"></div>
+                                                <div class="greenline line-2"></div>
+                                                <div class="greenline line-3"></div>
+                                                <div class="greenline line-4"></div>
+                                                <div class="greenline line-5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="texts">
+                                            <p class="title-1">Cybersecurity</p>
+                                            <p class="card-desc">End-to-end security audits, threat modelling, and 24/7
+                                                monitoring to keep your systems safe.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="controls">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="20" width="24" class="volume_button">
+                                            <path clip-rule="evenodd"
+                                                d="M11.26 3.691A1.2 1.2 0 0 1 12 4.8v14.4a1.199 1.199 0 0 1-2.048.848L5.503 15.6H2.4a1.2 1.2 0 0 1-1.2-1.2V9.6a1.2 1.2 0 0 1 1.2-1.2h3.103l4.449-4.448a1.2 1.2 0 0 1 1.308-.26Zm6.328-.176a1.2 1.2 0 0 1 1.697 0A11.967 11.967 0 0 1 22.8 12a11.966 11.966 0 0 1-3.515 8.485 1.2 1.2 0 0 1-1.697-1.697A9.563 9.563 0 0 0 20.4 12a9.565 9.565 0 0 0-2.812-6.788 1.2 1.2 0 0 1 0-1.697Zm-3.394 3.393a1.2 1.2 0 0 1 1.698 0A7.178 7.178 0 0 1 18 12a7.18 7.18 0 0 1-2.108 5.092 1.2 1.2 0 1 1-1.698-1.698A4.782 4.782 0 0 0 15.6 12a4.78 4.78 0 0 0-1.406-3.394 1.2 1.2 0 0 1 0-1.698Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="volume">
+                                            <div class="slider">
+                                                <div class="green"></div>
+                                            </div>
+                                            <div class="circle"></div>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm.848-12.352a1.2 1.2 0 0 0-1.696-1.696l-3.6 3.6a1.2 1.2 0 0 0 0 1.696l3.6 3.6a1.2 1.2 0 0 0 1.696-1.696L11.297 13.2H15.6a1.2 1.2 0 1 0 0-2.4h-4.303l1.551-1.552Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M21.6 12a9.6 9.6 0 1 1-19.2 0 9.6 9.6 0 0 1 19.2 0ZM8.4 9.6a1.2 1.2 0 1 1 2.4 0v4.8a1.2 1.2 0 1 1-2.4 0V9.6Zm6-1.2a1.2 1.2 0 0 0-1.2 1.2v4.8a1.2 1.2 0 1 0 2.4 0V9.6a1.2 1.2 0 0 0-1.2-1.2Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm4.448-10.448-3.6-3.6a1.2 1.2 0 0 0-1.696 1.696l1.551 1.552H8.4a1.2 1.2 0 1 0 0 2.4h4.303l-1.551 1.552a1.2 1.2 0 1 0 1.696 1.696l3.6-3.6a1.2 1.2 0 0 0 0-1.696Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="air"></div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
+                                            fill="none" height="20" width="24">
+                                            <path
+                                                d="M3.343 7.778a4.5 4.5 0 0 1 7.339-1.46L12 7.636l1.318-1.318a4.5 4.5 0 1 1 6.364 6.364L12 20.364l-7.682-7.682a4.501 4.501 0 0 1-.975-4.904Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div class="time">
+                                        <div class="elapsed"></div>
+                                    </div>
+                                    <div class="time_row">
+                                        <p class="timetext time_now">1:31</p>
+                                        <p class="timetext time_full">3:46</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="top">
+                                        <div class="pfp">
+                                            <div class="playing">
+                                                <div class="greenline line-1"></div>
+                                                <div class="greenline line-2"></div>
+                                                <div class="greenline line-3"></div>
+                                                <div class="greenline line-4"></div>
+                                                <div class="greenline line-5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="texts">
+                                            <p class="title-1">Cloud &amp; DevOps</p>
+                                            <p class="card-desc">Infrastructure as code, CI/CD pipelines, and
+                                                cost-optimised cloud architecture that scales.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="controls">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="20" width="24" class="volume_button">
+                                            <path clip-rule="evenodd"
+                                                d="M11.26 3.691A1.2 1.2 0 0 1 12 4.8v14.4a1.199 1.199 0 0 1-2.048.848L5.503 15.6H2.4a1.2 1.2 0 0 1-1.2-1.2V9.6a1.2 1.2 0 0 1 1.2-1.2h3.103l4.449-4.448a1.2 1.2 0 0 1 1.308-.26Zm6.328-.176a1.2 1.2 0 0 1 1.697 0A11.967 11.967 0 0 1 22.8 12a11.966 11.966 0 0 1-3.515 8.485 1.2 1.2 0 0 1-1.697-1.697A9.563 9.563 0 0 0 20.4 12a9.565 9.565 0 0 0-2.812-6.788 1.2 1.2 0 0 1 0-1.697Zm-3.394 3.393a1.2 1.2 0 0 1 1.698 0A7.178 7.178 0 0 1 18 12a7.18 7.18 0 0 1-2.108 5.092 1.2 1.2 0 1 1-1.698-1.698A4.782 4.782 0 0 0 15.6 12a4.78 4.78 0 0 0-1.406-3.394 1.2 1.2 0 0 1 0-1.698Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="volume">
+                                            <div class="slider">
+                                                <div class="green"></div>
+                                            </div>
+                                            <div class="circle"></div>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm.848-12.352a1.2 1.2 0 0 0-1.696-1.696l-3.6 3.6a1.2 1.2 0 0 0 0 1.696l3.6 3.6a1.2 1.2 0 0 0 1.696-1.696L11.297 13.2H15.6a1.2 1.2 0 1 0 0-2.4h-4.303l1.551-1.552Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M21.6 12a9.6 9.6 0 1 1-19.2 0 9.6 9.6 0 0 1 19.2 0ZM8.4 9.6a1.2 1.2 0 1 1 2.4 0v4.8a1.2 1.2 0 1 1-2.4 0V9.6Zm6-1.2a1.2 1.2 0 0 0-1.2 1.2v4.8a1.2 1.2 0 1 0 2.4 0V9.6a1.2 1.2 0 0 0-1.2-1.2Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm4.448-10.448-3.6-3.6a1.2 1.2 0 0 0-1.696 1.696l1.551 1.552H8.4a1.2 1.2 0 1 0 0 2.4h4.303l-1.551 1.552a1.2 1.2 0 1 0 1.696 1.696l3.6-3.6a1.2 1.2 0 0 0 0-1.696Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="air"></div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
+                                            fill="none" height="20" width="24">
+                                            <path
+                                                d="M3.343 7.778a4.5 4.5 0 0 1 7.339-1.46L12 7.636l1.318-1.318a4.5 4.5 0 1 1 6.364 6.364L12 20.364l-7.682-7.682a4.501 4.501 0 0 1-.975-4.904Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div class="time">
+                                        <div class="elapsed"></div>
+                                    </div>
+                                    <div class="time_row">
+                                        <p class="timetext time_now">1:31</p>
+                                        <p class="timetext time_full">3:46</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="top">
+                                        <div class="pfp">
+                                            <div class="playing">
+                                                <div class="greenline line-1"></div>
+                                                <div class="greenline line-2"></div>
+                                                <div class="greenline line-3"></div>
+                                                <div class="greenline line-4"></div>
+                                                <div class="greenline line-5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="texts">
+                                            <p class="title-1">Technology Consulting</p>
+                                            <p class="card-desc">
+                                            Strategic technology guidance to help teams make the right decisions with end to end support.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="controls">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="20" width="24" class="volume_button">
+                                            <path clip-rule="evenodd"
+                                                d="M11.26 3.691A1.2 1.2 0 0 1 12 4.8v14.4a1.199 1.199 0 0 1-2.048.848L5.503 15.6H2.4a1.2 1.2 0 0 1-1.2-1.2V9.6a1.2 1.2 0 0 1 1.2-1.2h3.103l4.449-4.448a1.2 1.2 0 0 1 1.308-.26Zm6.328-.176a1.2 1.2 0 0 1 1.697 0A11.967 11.967 0 0 1 22.8 12a11.966 11.966 0 0 1-3.515 8.485 1.2 1.2 0 0 1-1.697-1.697A9.563 9.563 0 0 0 20.4 12a9.565 9.565 0 0 0-2.812-6.788 1.2 1.2 0 0 1 0-1.697Zm-3.394 3.393a1.2 1.2 0 0 1 1.698 0A7.178 7.178 0 0 1 18 12a7.18 7.18 0 0 1-2.108 5.092 1.2 1.2 0 1 1-1.698-1.698A4.782 4.782 0 0 0 15.6 12a4.78 4.78 0 0 0-1.406-3.394 1.2 1.2 0 0 1 0-1.698Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="volume">
+                                            <div class="slider">
+                                                <div class="green"></div>
+                                            </div>
+                                            <div class="circle"></div>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm.848-12.352a1.2 1.2 0 0 0-1.696-1.696l-3.6 3.6a1.2 1.2 0 0 0 0 1.696l3.6 3.6a1.2 1.2 0 0 0 1.696-1.696L11.297 13.2H15.6a1.2 1.2 0 1 0 0-2.4h-4.303l1.551-1.552Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M21.6 12a9.6 9.6 0 1 1-19.2 0 9.6 9.6 0 0 1 19.2 0ZM8.4 9.6a1.2 1.2 0 1 1 2.4 0v4.8a1.2 1.2 0 1 1-2.4 0V9.6Zm6-1.2a1.2 1.2 0 0 0-1.2 1.2v4.8a1.2 1.2 0 1 0 2.4 0V9.6a1.2 1.2 0 0 0-1.2-1.2Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm4.448-10.448-3.6-3.6a1.2 1.2 0 0 0-1.696 1.696l1.551 1.552H8.4a1.2 1.2 0 1 0 0 2.4h4.303l-1.551 1.552a1.2 1.2 0 1 0 1.696 1.696l3.6-3.6a1.2 1.2 0 0 0 0-1.696Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="air"></div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
+                                            fill="none" height="20" width="24">
+                                            <path
+                                                d="M3.343 7.778a4.5 4.5 0 0 1 7.339-1.46L12 7.636l1.318-1.318a4.5 4.5 0 1 1 6.364 6.364L12 20.364l-7.682-7.682a4.501 4.501 0 0 1-.975-4.904Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div class="time">
+                                        <div class="elapsed"></div>
+                                    </div>
+                                    <div class="time_row">
+                                        <p class="timetext time_now">1:31</p>
+                                        <p class="timetext time_full">3:46</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="top">
+                                        <div class="pfp">
+                                            <div class="playing">
+                                                <div class="greenline line-1"></div>
+                                                <div class="greenline line-2"></div>
+                                                <div class="greenline line-3"></div>
+                                                <div class="greenline line-4"></div>
+                                                <div class="greenline line-5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="texts">
+                                            <p class="title-1">Data &amp; AI</p>
+                                            <p class="card-desc">Analytics pipelines, dashboards, and pragmatic AI
+                                                integrations to drive measurable ROI.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="controls">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="20" width="24" class="volume_button">
+                                            <path clip-rule="evenodd"
+                                                d="M11.26 3.691A1.2 1.2 0 0 1 12 4.8v14.4a1.199 1.199 0 0 1-2.048.848L5.503 15.6H2.4a1.2 1.2 0 0 1-1.2-1.2V9.6a1.2 1.2 0 0 1 1.2-1.2h3.103l4.449-4.448a1.2 1.2 0 0 1 1.308-.26Zm6.328-.176a1.2 1.2 0 0 1 1.697 0A11.967 11.967 0 0 1 22.8 12a11.966 11.966 0 0 1-3.515 8.485 1.2 1.2 0 0 1-1.697-1.697A9.563 9.563 0 0 0 20.4 12a9.565 9.565 0 0 0-2.812-6.788 1.2 1.2 0 0 1 0-1.697Zm-3.394 3.393a1.2 1.2 0 0 1 1.698 0A7.178 7.178 0 0 1 18 12a7.18 7.18 0 0 1-2.108 5.092 1.2 1.2 0 1 1-1.698-1.698A4.782 4.782 0 0 0 15.6 12a4.78 4.78 0 0 0-1.406-3.394 1.2 1.2 0 0 1 0-1.698Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="volume">
+                                            <div class="slider">
+                                                <div class="green"></div>
+                                            </div>
+                                            <div class="circle"></div>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm.848-12.352a1.2 1.2 0 0 0-1.696-1.696l-3.6 3.6a1.2 1.2 0 0 0 0 1.696l3.6 3.6a1.2 1.2 0 0 0 1.696-1.696L11.297 13.2H15.6a1.2 1.2 0 1 0 0-2.4h-4.303l1.551-1.552Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M21.6 12a9.6 9.6 0 1 1-19.2 0 9.6 9.6 0 0 1 19.2 0ZM8.4 9.6a1.2 1.2 0 1 1 2.4 0v4.8a1.2 1.2 0 1 1-2.4 0V9.6Zm6-1.2a1.2 1.2 0 0 0-1.2 1.2v4.8a1.2 1.2 0 1 0 2.4 0V9.6a1.2 1.2 0 0 0-1.2-1.2Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            height="24" width="24">
+                                            <path clip-rule="evenodd"
+                                                d="M12 21.6a9.6 9.6 0 1 0 0-19.2 9.6 9.6 0 0 0 0 19.2Zm4.448-10.448-3.6-3.6a1.2 1.2 0 0 0-1.696 1.696l1.551 1.552H8.4a1.2 1.2 0 1 0 0 2.4h4.303l-1.551 1.552a1.2 1.2 0 1 0 1.696 1.696l3.6-3.6a1.2 1.2 0 0 0 0-1.696Z"
+                                                fill-rule="evenodd"></path>
+                                        </svg>
+                                        <div class="air"></div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"
+                                            fill="none" height="20" width="24">
+                                            <path
+                                                d="M3.343 7.778a4.5 4.5 0 0 1 7.339-1.46L12 7.636l1.318-1.318a4.5 4.5 0 1 1 6.364 6.364L12 20.364l-7.682-7.682a4.501 4.501 0 0 1-.975-4.904Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div class="time">
+                                        <div class="elapsed"></div>
+                                    </div>
+                                    <div class="time_row">
+                                        <p class="timetext time_now">1:31</p>
+                                        <p class="timetext time_full">3:46</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
                     </div> <!-- end column  -->
                 </div> <!-- end s-about__content  -->
+
 
             </section> <!-- end about -->
 
 
-            <!-- services
-            ----------------------------------------------- -->
-            <section id="services" class="s-services">
 
-                <div class="s-services__bg"></div>
-                
-                <div class="row narrow section-header section-header--dark has-bottom-sep">
-                    <div class="column lg-12">
-                        
-                        <h3 class="text-pretitle">Services</h3>
-                        <h1 class="text-display-title">What We Do.</h1>
-                        
-                        <p class="lead">From concept to launch, we ship secure, scalable products—engineering, cloud/DevOps, cybersecurity, data/AI, and design—tailored for India and global markets.</p>
-                        
-                    </div> <!-- end column -->
-                </div> <!-- end section header -->
+            <!-- footer
+        ================================================== -->
+            <footer class="site-footer">
+                <div class="footer-container">
 
-                <div class="s-services__content">
-
-                    <div class="row services-list block-lg-one-half block-tab-whole" data-animate-block>
-
-                        <div class="column service-item" data-animate-el>
-
-                            <span class="service-icon-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M22 4c-1.5 0-2.662 1.685-1.598 3.194.535.759.406 1.216.045 1.749-.765 1.127-1.872 2.057-3.447 2.057-2.521 0-3.854-2.083-4.131-3.848-.096-.614-.15-1.074.436-1.644.402-.39.695-.904.695-1.508 0-1.104-.896-2-2-2s-2 .896-2 2c0 .604.293 1.118.695 1.508.586.57.531 1.03.436 1.644-.277 1.765-1.61 3.848-4.131 3.848-1.575 0-2.682-.93-3.447-2.058-.362-.532-.491-.989.045-1.748 1.064-1.509-.098-3.194-1.598-3.194-1.104 0-2 .896-2 2 0 .797.464 1.495 1.144 1.808.825.38.856 1.317.856 2.171v12.021h20v-12.021c0-.854.031-1.792.856-2.171.68-.313 1.144-1.011 1.144-1.808 0-1.104-.896-2-2-2zm-10 6.297c1.977 2.96 5.58 3.354 8 1.851v3.852h-16v-3.852c2.398 1.49 6.01 1.131 8-1.851zm-8 9.703v-2h16v2h-16z"/></svg>
-                            </span>
-
-                            <div class="service-content">
-                                <h3 class="h4">Product Engineering</h3>
-
-                                <p>
-                                We design and build resilient web and SaaS products from MVP to enterprise with strong quality gates.
-                                </p>
+                    <!-- Brand -->
+                    <div class="footer-col footer-brand" style="margin-top: 35px;">
+                        <div class="footer-logo">
+                            <img src="/logo.png" alt="LKA Dynamics logo" style="margin-top: 20px;">
+                            <div>
+                                <strong>LKA Dynamics</strong>
                             </div>
-
-                        </div> <!-- end service-item -->
+                        </div>
                         
-                        <div class="column service-item" data-animate-el>
-
-                            <span class="service-icon-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17 8c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-2c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm-10 6c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm10-8c.343 0 .677.035 1 .101v-2.101c0-.552-.447-1-1-1s-1 .448-1 1v2.101c.323-.066.657-.101 1-.101zm-10 6c.343 0 .677.035 1 .101v-8.101c0-.552-.447-1-1-1s-1 .448-1 1v8.101c.323-.066.657-.101 1-.101zm10 4c-.343 0-.677-.035-1-.101v8.101c0 .552.447 1 1 1s1-.448 1-1v-8.101c-.323.066-.657.101-1 .101zm-10 6c-.343 0-.677-.035-1-.101v2.101c0 .552.447 1 1 1s1-.448 1-1v-2.101c-.323.066-.657.101-1 .101z"/></svg>
-                            </span>
-
-                            <div class="service-content">
-                                <h3 class="h4">Cloud & DevOps</h3>
-
-                                <p>
-                                IaC, CI/CD, observability, and cost optimization on AWS/GCP/Azure with secure-by-default pipelines.
-                                </p>
-                            </div>
-
-                        </div> <!-- end service-item -->
-
-                        <div class="column service-item" data-animate-el>
-
-                            <span class="service-icon-block">
-                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M10 16v2.5c0 2.483-2.017 4.5-4.5 4.5-2.484 0-4.5-2.017-4.5-4.5 0-2.484 2.016-4.5 4.5-4.5h2.5v-4h-2.5c-2.484 0-4.5-2.016-4.5-4.5 0-2.483 2.016-4.5 4.5-4.5 2.483 0 4.5 2.017 4.5 4.5v2.5h4v-2.5c0-2.483 2.017-4.5 4.5-4.5 2.484 0 4.5 2.017 4.5 4.5 0 2.484-2.016 4.5-4.5 4.5h-2.5v4h2.5c2.484 0 4.5 2.016 4.5 4.5 0 2.483-2.016 4.5-4.5 4.5-2.483 0-4.5-2.017-4.5-4.5v-2.5h-4zm-2 0h-2.5c-1.379 0-2.5 1.122-2.5 2.5s1.121 2.5 2.5 2.5 2.5-1.122 2.5-2.5v-2.5zm10.5 0h-2.5v2.5c0 1.378 1.121 2.5 2.5 2.5s2.5-1.122 2.5-2.5-1.121-2.5-2.5-2.5zm-4.5-6h-4v4.132h4v-4.132zm-6-2v-2.5c0-1.378-1.121-2.5-2.5-2.5s-2.5 1.122-2.5 2.5 1.121 2.5 2.5 2.5h2.5zm10.5 0c1.379 0 2.5-1.122 2.5-2.5s-1.121-2.5-2.5-2.5-2.5 1.122-2.5 2.5v2.5h2.5z"/></svg>
-                            </span>
-
-                            <div class="service-content">
-                                <h3 class="h4">Cybersecurity & Compliance (India‑first)</h3>
-
-                                <p>
-                                Security reviews, hardening, SOC2/ISO/NPCI readiness, and localization for Indian regulatory needs.
-                                </p>
-                            </div>
-
-                        </div> <!-- end service-item -->
-
-                        <div class="column service-item" data-animate-el>
-
-                            <span class="service-icon-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0l-11 6v12.131l11 5.869 11-5.869v-12.066l-11-6.065zm-1 21.2l-6.664-3.555 4.201-2.801c1.08-.719-.066-2.359-1.243-1.575l-4.294 2.862v-7.901l8 4.363v8.607zm-6.867-14.63l6.867-3.746v4.426c0 1.323 2 1.324 2 0v-4.415l6.91 3.811-7.905 4.218-7.872-4.294zm8.867 6.03l8-4.269v7.8l-4.263-2.842c-1.181-.785-2.323.855-1.245 1.574l4.172 2.781-6.664 3.556v-8.6z"/></svg>
-                            </span>
-
-                            <div class="service-content">
-                                <h3 class="h4">Data & AI</h3>
-
-                                <p>
-                                Analytics pipelines, dashboards, and pragmatic AI integrations that deliver measurable ROI.
-                                </p>
-                            </div>
-
-                        </div> <!-- end service-item -->
-
-                        <div class="column service-item" data-animate-el>
-
-                            <span class="service-icon-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17 8c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-2c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm-10 6c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm10-8c.343 0 .677.035 1 .101v-2.101c0-.552-.447-1-1-1s-1 .448-1 1v2.101c.323-.066.657-.101 1-.101zm-10 6c.343 0 .677.035 1 .101v-8.101c0-.552-.447-1-1-1s-1 .448-1 1v8.101c.323-.066.657-.101 1-.101zm10 4c-.343 0-.677-.035-1-.101v8.101c0 .552.447 1 1 1s1-.448 1-1v-8.101c-.323.066-.657.101-1 .101zm-10 6c-.343 0-.677-.035-1-.101v2.101c0 .552.447 1 1 1s1-.448 1-1v-2.101c-.323.066-.657.101-1 .101z"/></svg>
-                            </span>
-
-                            <div class="service-content">
-                                <h3 class="h4">Mobile & Integrations</h3>
-
-                                <p>
-                                Native and cross‑platform apps, secure API design, and third‑party integrations that scale.
-                                </p>
-                            </div>
-
-                        </div> <!-- end service-item -->
-
-                        <div class="column service-item" data-animate-el>
-
-                            <span class="service-icon-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17 8c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-2c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm-10 6c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm10-8c.343 0 .677.035 1 .101v-2.101c0-.552-.447-1-1-1s-1 .448-1 1v2.101c.323-.066.657-.101 1-.101zm-10 6c.343 0 .677.035 1 .101v-8.101c0-.552-.447-1-1-1s-1 .448-1 1v8.101c.323-.066.657-.101 1-.101zm10 4c-.343 0-.677-.035-1-.101v8.101c0 .552.447 1 1 1s1-.448 1-1v-8.101c-.323.066-.657.101-1 .101zm-10 6c-.343 0-.677-.035-1-.101v2.101c0 .552.447 1 1 1s1-.448 1-1v-2.101c-.323.066-.657.101-1 .101z"/></svg>
-                            </span>
-
-                            <div class="service-content">
-                                <h3 class="h4">UX/UI Design</h3>
-
-                                <p>
-                                Research‑driven UX and accessible interfaces that convert and retain users.
-                                </p>
-                            </div>
-
-                        </div> <!-- end service-item -->
-
-                    </div> <!-- end services-list -->
-
-            </section> <!-- end services -->
-
-            <!-- portfolio removed -->
-
-            <!-- contact
-            ----------------------------------------------- -->
-            <section id="contact" class="s-contact s-contact--light target-section">
-
-                <div class="row section-header">
-                    <div class="column lg-12">
-                        
-                        <h3 class="text-pretitle">Get In Touch</h3>
-                        <h1 class="text-display-title">
-                            Have an idea or an epic project in mind? Talk to us. 
-                            Let’s work together and make something great. 
-                            Drop us a line at <a href="mailto:#0">hello@lkadynamics.com</a>.
-                        </h1>
-                        
-                    </div> <!-- end column -->
-                </div> <!-- end section header -->
-
-                <div class="row s-contact__infos">
-
-                    <div class="column lg-5 md-6 stack-on-900 s-contact__block-address">
-                        <h5 class="with-top-line">Where to Find Us</h5>
-        
-                        <p>
-                        1600 Amphitheatre Parkway <br>
-                        Mountain View, California <br>
-                        94043  US
+                        <span>Engineering & Cybersecurity</span>
+                        <p class="footer-desc">
+                            We build secure, scalable systems that businesses can trust —
+                            from first deployment to global scale.
                         </p>
                     </div>
-        
-                    <div class="column lg-3 md-6 stack-on-900 s-contact__block-social">
-                        <h5 class="with-top-line">Follow Us</h5>
-        
-                        <ul class="s-contact__list">
-                            <li><a href="#0">Facebook</a></li>
-                            <li><a href="#0">Twitter</a></li>
-                            <li><a href="#0">Instagram</a></li>
+
+                    <!-- Company -->
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#intro">Home</a></li>
+                            <li><a href="#terminal">Our Mission</a></li>
                         </ul>
                     </div>
-        
-                    <div class="column lg-4 md-12 stack-on-900 s-contact__block-number">
-                        <h5 class="with-top-line">Contact Us</h5>
-        
-                        <ul class="s-contact__list">
-                            <li><a href="mailto:#0">info@lkadynamics.com</a></li>
-                            <li><a href="tel:197-543-2345">+197 543 2345</a></li>
-                            <li><a href="tel:197-123-9876">+197 123 9876</a></li>
+
+                    <!-- Services -->
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <ul>
+                            <li>Cybersecurity</li>
+                            <li>Cloud & DevOps</li>
+                            <li>Data & AI</li>
+                            <li>Tech Consulting</li>
                         </ul>
                     </div>
-        
-                </div> <!-- end s-contact__infos -->
 
-                <div class="row s-contact__bottom">
-    
-                   
-        
-                    <div class="column lg-7 tab-12 s-contact__subscribe">
-                        <h5>Subscribe</h5>
-        
-                        <div class="subscribe-form">
-                            <form id="mc-form" class="mc-form" novalidate="true">
-                                <input type="email" name="EMAIL" id="mce-EMAIL" class="u-fullwidth text-center" placeholder="Your Email Address" title="The domain portion of the email address is invalid (the portion after the @)." pattern="^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*(\.\w{2,})+$" required="">
-                                <input type="submit" name="subscribe" value="Subscribe" class="btn btn--primary u-fullwidth">
-                                <!-- <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_cdb7b577e41181934ed6a6a44_9a91cfe7b3" tabindex="-1" value=""></div> -->
-                                <div class="mc-status"></div>
-                            </form>
-                        </div>
+                    <!-- Contact / Legal -->
+                    <div class="footer-col">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:contact@lkadynamics.com">contact@lkadynamics.com</a></li>
+                            <li>India</li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
                     </div>
 
-                </div> <!-- end s-contact__button -->
-
-
-            </section> <!-- end contact -->
-
-        </section> 
-        <!-- end s-content -->
-
-
-        <!-- footer
-        ================================================== -->
-        <footer id="colophon" class="s-footer">
-            <div class="row">
-                <div class="column lg-12 ss-copyright">
-                    <span>© Copyright LKA Dynamics 2025</span>
                 </div>
-            </div>
 
-            <div class="ss-go-top">
-                <a class="smoothscroll" title="Back to Top" href="#top">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 4h12v2H6zm5 10v6h2v-6h5l-6-6-6 6z"></path></svg>
-                </a>
-            </div> <!-- end ss-go-top -->
-        </footer> <!-- end s-footer -->
+                <div class="footer-bottom">
+                    <span>© 2025 LKA Dynamics. All rights reserved.</span>
+                </div>
+            </footer>
+            <!-- end s-footer -->
 
 
     </div> <!-- end s-pagewrap -->
@@ -363,9 +574,11 @@
 
             <div class="pswp__ui pswp__ui--hidden">
                 <div class="pswp__top-bar">
-                    <div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button> <button class="pswp__button pswp__button--share" title=
-                    "Share"></button> <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom" title=
-                    "Zoom in/out"></button>
+                    <div class="pswp__counter"></div><button class="pswp__button pswp__button--close"
+                        title="Close (Esc)"></button> <button class="pswp__button pswp__button--share"
+                        title="Share"></button> <button class="pswp__button pswp__button--fs"
+                        title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom"
+                        title="Zoom in/out"></button>
                     <div class="pswp__preloader">
                         <div class="pswp__preloader__icn">
                             <div class="pswp__preloader__cut">
@@ -376,8 +589,8 @@
                 </div>
                 <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
                     <div class="pswp__share-tooltip"></div>
-                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button> <button class="pswp__button pswp__button--arrow--right" title=
-                "Next (arrow right)"></button>
+                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
                 <div class="pswp__caption">
                     <div class="pswp__caption__center"></div>
                 </div>
@@ -393,5 +606,36 @@
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 
+    <script>
+        // Smooth-scroll + focus the email field when user clicks Join the waitlist
+        (function () {
+            document.addEventListener('DOMContentLoaded', function () {
+                var btn = document.getElementById('join-waitlist');
+                if (!btn) return;
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var target = document.getElementById('mce-EMAIL');
+                    if (target) {
+                        try {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } catch (err) {
+                            // fallback
+                            window.location.hash = '#contact';
+                        }
+                        // focus after scroll
+                        setTimeout(function () {
+                            try { target.focus({ preventScroll: true }); } catch (err) { target.focus(); }
+                        }, 600);
+                    } else {
+                        // fallback to contact section if input missing
+                        var contact = document.getElementById('contact');
+                        if (contact) contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        })();
+    </script>
+
 </body>
+
 </html>

@@ -370,15 +370,20 @@
         const jumpV = 580;    // px/s
         const speed = 220;    // px/s ground speed
 
+        // change: use a car sprite (rectangle + roof + wheels) instead of the dino
         const dino = {
             x: 24,
-            y: groundY - 28,
-            w: 36,
-            h: 28,
+            // position on the ground; height will be set from h
+            y: 0,
+            // make the car a bit wider and lower than the original dino
+            w: 44,
+            h: 18,
             vy: 0,
             onGround: true,
+            // kept for continuity with the loop (can be used for wheel animation)
             legPhase: 0
         };
+        dino.y = groundY - dino.h;
 
         const obstacles = [];
         let lastSpawn = 0;
@@ -417,24 +422,33 @@
         content.addEventListener('click', () => jump());
 
         function drawDino() {
+            // draw a simple car: body, roof, windows and wheels
             // body
             ctx.fillStyle = '#e6e6e6';
-            ctx.fillRect(dino.x, dino.y, dino.w, dino.h);
-            // head
-            ctx.fillRect(dino.x + dino.w - 18, dino.y - 10, 16, 12);
-            // eye
+            ctx.fillRect(dino.x, dino.y + 4, dino.w, dino.h - 4);
+
+            // roof / cabin (sloped rectangle)
+            ctx.fillRect(dino.x + Math.round(dino.w * 0.2), dino.y - 6, Math.round(dino.w * 0.55), 10);
+
+            // windows (dark)
             ctx.fillStyle = '#111';
-            ctx.fillRect(dino.x + dino.w - 6, dino.y - 6, 3, 3);
-            // legs (alternating)
-            ctx.fillStyle = '#dcdcdc';
-            const legUp = (Math.floor(dino.legPhase) % 2) === 0;
-            if (legUp) {
-                ctx.fillRect(dino.x + 4, dino.y + dino.h, 6, 6);
-                ctx.fillRect(dino.x + 18, dino.y + dino.h - 4, 6, 10);
-            } else {
-                ctx.fillRect(dino.x + 4, dino.y + dino.h - 4, 6, 10);
-                ctx.fillRect(dino.x + 18, dino.y + dino.h, 6, 6);
-            }
+            ctx.globalAlpha = 0.12;
+            ctx.fillRect(dino.x + Math.round(dino.w * 0.28), dino.y - 2, Math.round(dino.w * 0.2), 6);
+            ctx.fillRect(dino.x + Math.round(dino.w * 0.55), dino.y - 2, Math.round(dino.w * 0.18), 6);
+            ctx.globalAlpha = 1;
+
+            // wheels
+            const wheelRadius = 5;
+            const wheelY = dino.y + dino.h - 4;
+            ctx.fillStyle = '#111';
+            // left wheel
+            ctx.beginPath();
+            ctx.arc(dino.x + 10, wheelY, wheelRadius, 0, Math.PI * 2);
+            ctx.fill();
+            // right wheel
+            ctx.beginPath();
+            ctx.arc(dino.x + dino.w - 12, wheelY, wheelRadius, 0, Math.PI * 2);
+            ctx.fill();
         }
 
         function drawGround(offset) {
@@ -533,6 +547,22 @@
         });
 
     }; // menu on scrolldown
+
+    (function () {
+  const nav = document.querySelector('.simple-navbar');
+  if (!nav) return;
+
+  const HERO_HEIGHT = document.getElementById('intro')?.offsetHeight || 300;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > HERO_HEIGHT - 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+})();
+
 
 
    /* offcanvas menu
@@ -976,7 +1006,7 @@ const ssInit = function() {
     ssHeroCubes();
     ssDinoRunner();
     ssMenuOnScrolldown();
-    ssOffCanvas();
+    //ssOffCanvas();
     ssMasonry();
     ssAnimateOnScroll();
     ssSwiper();
@@ -990,3 +1020,163 @@ const ssInit = function() {
 ssInit();
 
 })(document.documentElement);
+
+/* ------------------------------------------------------------------
+ * Waitlist widget behaviour
+ * - stores entries in localStorage (client-side demo)
+ * - updates avatars and count
+ * - simple email validation
+ * ------------------------------------------------------------------ */
+(function(){
+    'use strict';
+
+    function initWaitlistWidget(){
+        var widget = document.querySelector('.waitlist-widget');
+        if (!widget) return;
+
+        var form = document.getElementById('waitlist-form');
+        var input = document.getElementById('waitlist-email');
+        var avatarsEl = document.getElementById('waitlist-avatars');
+        var countEl = document.getElementById('waitlist-count');
+        var statusEl = document.getElementById('waitlist-status');
+
+        // base count (visual starting point); we'll show "200+" when over 199
+        var BASE_COUNT = 200;
+
+        // load saved emails from localStorage (array of {email, name})
+        var entries = [];
+        try { entries = JSON.parse(localStorage.getItem('lkad_waitlist') || '[]'); } catch(e) { entries = []; }
+
+        // sample default avatars (colors) - used for PREPOP avatars until user adds
+        var defaultColors = ['#2D9CDB','#F2994A','#9B51E0','#56CCF2','#27AE60'];
+
+        function emailValid(v){
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        }
+
+        function initialsFromEmail(email){
+            var name = (email||'').split('@')[0] || '';
+            var parts = name.split(/\.|_|-|\+|\d/).filter(Boolean);
+            var chars = (parts[0] || '').slice(0,1).toUpperCase();
+            if (parts.length>1) chars += (parts[1]||'').slice(0,1).toUpperCase();
+            return chars || (email||'').slice(0,2).toUpperCase();
+        }
+
+        var lastTotal = null;
+
+        function render(){
+            // avatars: show up to 5 members (mix default and saved)
+            avatarsEl.innerHTML = '';
+            var shown = [];
+            // use last entries first
+            var showEntries = entries.slice(-5).reverse();
+            for (var i=0;i<showEntries.length;i++){
+                shown.push({ initials: initialsFromEmail(showEntries[i].email), color: defaultColors[i % defaultColors.length] });
+            }
+
+            // if fewer than 5, pad with default placeholders
+            for (var j=shown.length;j<5;j++){
+                shown.push({ initials: '', color: defaultColors[j % defaultColors.length] });
+            }
+
+            // create CSS-driven person avatars (no external images)
+            var skinClasses = ['person-skin-light','person-skin-medium','person-skin-dark'];
+            var hairClasses = ['hair-black','hair-brown','hair-red','hair-blond'];
+
+            shown.forEach(function(a,i){
+                var container = document.createElement('div');
+                // keep .avatar for legacy spacing/animation, add person-avatar for face markup
+                container.className = 'avatar person-avatar';
+
+                // choose skin/hair deterministically from index for consistent look
+                var skin = skinClasses[i % skinClasses.length];
+                var hair = hairClasses[i % hairClasses.length];
+
+                // build face
+                var plate = document.createElement('div');
+                plate.className = 'plate';
+
+                var face = document.createElement('div');
+                face.className = 'person-face ' + skin;
+
+                var hairEl = document.createElement('div');
+                hairEl.className = 'person-hair ' + hair;
+
+                var eyes = document.createElement('div');
+                eyes.className = 'person-eyes';
+                var eyeL = document.createElement('span'); eyeL.className = 'eye';
+                var eyeR = document.createElement('span'); eyeR.className = 'eye';
+                eyes.appendChild(eyeL); eyes.appendChild(eyeR);
+
+                var mouth = document.createElement('div');
+                mouth.className = 'person-mouth';
+
+                face.appendChild(hairEl);
+                face.appendChild(eyes);
+                face.appendChild(mouth);
+                plate.appendChild(face);
+                container.appendChild(plate);
+                avatarsEl.appendChild(container);
+            });
+
+            // animate avatars (staggered)
+            var avatarNodes = avatarsEl.querySelectorAll('.avatar');
+            avatarNodes.forEach(function(n){ n.classList.remove('avatar-pop'); });
+            avatarNodes.forEach(function(n,i){
+                setTimeout(function(){ n.classList.add('avatar-pop'); }, 80 * i);
+            });
+
+            var total = BASE_COUNT + entries.length;
+            if (total > 199) {
+                countEl.textContent = '200+ people on the waitlist';
+            } else {
+                countEl.textContent = total + ' people on the waitlist';
+            }
+
+            // pulse count on change
+            if (lastTotal === null || lastTotal !== total) {
+                countEl.classList.remove('count-pulse');
+                // force reflow to restart animation
+                void countEl.offsetWidth;
+                countEl.classList.add('count-pulse');
+                setTimeout(function(){ countEl.classList.remove('count-pulse'); }, 500);
+            }
+            lastTotal = total;
+        }
+
+        function showStatus(msg, isError){
+            statusEl.textContent = msg;
+            statusEl.style.color = isError ? '#ffb3b3' : 'var(--color-success-content)';
+            setTimeout(function(){ statusEl.textContent = ''; }, 3500);
+        }
+
+        form.addEventListener('submit', function(ev){
+            ev.preventDefault();
+            var v = input.value.trim();
+            if (!v) { showStatus('Please enter an email address', true); return; }
+            if (!emailValid(v)) { showStatus('Please enter a valid email address', true); return; }
+
+            // dedupe check (client demo)
+            var exists = entries.some(function(e){ return e.email.toLowerCase() === v.toLowerCase(); });
+            if (exists) { showStatus('You already joined the waitlist — thank you!'); input.value=''; return; }
+
+            // add entry
+            entries.push({ email: v, ts: Date.now() });
+            try { localStorage.setItem('lkad_waitlist', JSON.stringify(entries)); } catch(e){ /* ignore */ }
+
+            // visual update
+            render();
+            showStatus('Thanks — you are on the waitlist!');
+            input.value = '';
+            input.blur();
+        });
+
+        // populate initial avatars (and count)
+        render();
+    }
+
+    // init on DOM ready
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initWaitlistWidget);
+    else initWaitlistWidget();
+
+})();

@@ -2828,13 +2828,11 @@ img.u-pull-left {
 }
 
 .text-display-title {
-    --text-display-title-size : 6rem;
-    --text-multiplier         : 1;
-    font-family               : var(--font-1);
-    font-size                 : calc(var(--text-display-title-size) * var(--text-multiplier));
     font-weight               : 500;
     line-height               : 1.2667;
-    color                     : white;
+    color                     : black;
+    align-items: center;
+    text-align: center;
     margin-top                : 0;
 }
 
@@ -3152,13 +3150,12 @@ img.u-pull-left {
  *
  * ------------------------------------------------------------------- */
 .s-intro {
-    background-color : var(--color-preloader-bg);
-    width            : 100%;
-    height           : 100vh;
-    min-height       : calc(25.5 * var(--space));
-    overflow         : hidden;
-    position         : relative;
+  min-height: auto;      /* REMOVE 100vh behaviour */
+  padding-bottom: 10px; /* ensures breathing room */
+  position: relative;
+  overflow: hidden;
 }
+
 
 /* --------------------------------------------------------------------
  * ## intro background
@@ -3491,7 +3488,6 @@ img.u-pull-left {
     background-color : var(--color-text-light);
     width            : 2px;
     height           : var(--vspace-3_5);
-    margin           : 0 auto var(--vspace-0_5);
 }
 
 .s-about__content {
@@ -3503,7 +3499,6 @@ img.u-pull-left {
     font-weight : 500;
     font-size   : calc(var(--text-desc-size) * var(--text-multiplier));
     line-height : 1.5385;
-    margin-top  : var(--vspace-1_5);
 }
 
 .s-about__desc span {
@@ -4452,3 +4447,829 @@ img.u-pull-left {
         display : none;
     }
 }
+
+/* -------------------------------------------------------------------
+ * Waitlist CTA styles
+ * Minimal, non-invasive styles for the new Join the waitlist CTA and arrow
+ * ------------------------------------------------------------------ */
+#join-waitlist {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+}
+
+.waitlist-arrow {
+    display: inline-block;
+    font-size: 1.1rem;
+    line-height: 1;
+    transform: translateY(0);
+    transition: transform .28s ease, opacity .28s ease;
+    opacity: 0.95;
+}
+
+#join-waitlist:hover .waitlist-arrow {
+    transform: translateY(4px);
+}
+
+/* Small responsive tweak so CTA doesn't overflow on small screens */
+@media screen and (max-width: 600px) {
+    #join-waitlist { font-size: 0.95rem; }
+    .waitlist-arrow { font-size: 0.95rem; }
+}
+
+
+
+
+/* -------------------------------------------------------------------
+ * Waitlist widget styles
+ * ------------------------------------------------------------------ */
+.waitlist-widget {
+    margin: 2.2rem auto 0 auto;
+    max-width: 760px;
+    background: linear-gradient(180deg, rgba(12,14,18,0.92), rgba(22,24,28,0.88));
+    border: 1px solid rgba(255,255,255,0.12); /* stronger white border */
+    padding: 2rem 2.2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(2,6,12,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+    backdrop-filter: blur(6px);
+}
+
+.waitlist-title {
+    margin: 0 0 0.6rem 0;
+    font-size: calc(var(--text-display-1) * 0.28);
+    color: var(--color-white);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.waitlist-desc {
+    margin: 0 0 1.25rem 0;
+    color: rgba(255,255,255,0.7);
+    font-size: var(--text-md);
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.waitlist-form {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+    flex-wrap: wrap;
+}
+
+.waitlist-form input[type="email"] {
+    min-width: 260px;
+    flex: 1 1 420px;
+    padding: 0.9rem 1.2rem;
+    border-radius: 7px;
+    margin-top: 13px;
+    border: 1px solid rgba(255,255,255,0.18); /* white border on input */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color: var(--color-white);
+    outline: none;
+    height: 52px; /* keep consistent height with button */
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.waitlist-form input[type="email"]::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.waitlist-form .btn--primary {
+    border-radius: 7px;
+    white-space: nowrap;
+    margin-top: 0px;
+    height: 52px; /* match input height */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-1);
+    color: var(--color-btn-primary-text);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 6px 18px rgba(249,168,40,0.18);
+    border: none;
+    align-self: center; /* ensure vertical centering */
+}
+
+.waitlist-form .btn--primary:hover {
+    transform: translateY(-2px);
+}
+
+.waitlist-meta {
+    display: block;
+    position: relative; /* allow right-aligned count */
+    padding: 0.6rem 0 0.2rem 0;
+}
+
+.waitlist-avatars {
+    display: flex;
+    align-items: center;
+    gap: 0; /* use per-avatar negative margin for overlap */
+    justify-content: center;
+    margin: 0 auto;
+    width: auto; /* let content define width so margin:auto centers it */
+    padding-left: 8px; /* visual offset so first avatar isn't flush */
+}
+
+.waitlist-avatars .avatar {
+    /* slightly larger circle with dark background and soft shadow */
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: white;
+    box-shadow: 0 12px 28px rgba(2,6,12,0.6), inset 0 -6px 10px rgba(0,0,0,0.45);
+    border: none;
+    background: rgba(6,10,16,0.6);
+    overflow: hidden; /* ensure img cannot overflow the circle */
+}
+
+.waitlist-avatars .avatar img {
+    /* scale the SVG up a bit and keep it centered; use contain to preserve aspect */
+    width: 78%;
+    height: 78%;
+    display: block;
+    object-fit: contain;
+    border-radius: 50%;
+    transform-origin: 50% 50%;
+}
+
+/* slight overlap like the design sample */
+.waitlist-avatars .avatar { margin-left: -10px; }
+.waitlist-avatars .avatar:first-child { margin-left: 0; }
+
+/* avatar pop animation */
+.avatar-pop {
+    animation: avatarPop .45s cubic-bezier(.2,.9,.3,1) both;
+}
+@keyframes avatarPop {
+    0% { transform: scale(.4) translateY(6px); opacity: 0; }
+    60% { transform: scale(1.08) translateY(-2px); opacity: 1; }
+    100% { transform: scale(1) translateY(0); }
+}
+
+.waitlist-count {
+    color: rgba(255,255,255,0.9);
+    font-size: var(--text-sm);
+    position: absolute;
+    right: 1.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.95;
+}
+
+/* count pulse */
+.count-pulse { animation: countPulse .36s ease both; }
+@keyframes countPulse {
+    0% { transform: translateY(-50%) scale(0.96); }
+    50% { transform: translateY(-50%) scale(1.06); }
+    100% { transform: translateY(-50%) scale(1); }
+}
+
+/* responsive: stack avatars and count on small screens */
+@media screen and (max-width: 720px) {
+    .waitlist-meta { position: static; }
+    .waitlist-count { position: static; transform: none; margin-top: 0.6rem; }
+}
+
+/* ------------------------------------------------------------------
+ * CSS-generated person avatar (pure CSS face)
+ * Small, simple faces composed of head, hair, eyes and mouth.
+ * These are used instead of SVG images and are fully centerable.
+ * ------------------------------------------------------------------ */
+.person-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: visible;
+}
+.person-avatar .plate {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(6,10,16,0.6);
+    box-shadow: 0 12px 28px rgba(2,6,12,0.6), inset 0 -6px 10px rgba(0,0,0,0.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.person-face {
+    width: 32px;
+    height: 28px;
+    border-radius: 50% / 60%;
+    position: relative;
+    display: block;
+}
+.person-skin-light { background: #F7DECE; }
+.person-skin-medium { background: #F0C4A3; }
+.person-skin-dark { background: #D09A7A; }
+
+.person-hair {
+    position: absolute;
+    top: -6px; /* lift hair slightly so it doesn't reach the eyes */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 14px; /* reduce height so eyes are not covered */
+    border-radius: 50% 50% 40% 40%;
+    z-index: 1; /* put hair behind eyes/mouth */
+}
+.hair-black { background: #222; }
+.hair-red { background: #E95F28; }
+.hair-brown { background: #6B3F2F; }
+.hair-blond { background: #F2D47A; }
+
+.person-eyes {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    display:flex;
+    justify-content:space-between;
+}
+.person-eyes { z-index: 2; }
+.person-eyes .eye { width:6px; height:6px; background:#292F33; border-radius:50%; }
+
+.person-mouth {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 6px;
+    border-radius: 0 0 8px 8px;
+    background: #C1694F;
+}
+.person-mouth { z-index: 2; }
+
+/* ensure person avatars sit exactly centered inside .avatar container */
+.waitlist-avatars .person-avatar { margin-left: -10px; display:inline-block; }
+.waitlist-avatars .person-avatar:first-child { margin-left: 0; }
+
+
+.waitlist-status {
+    margin-top: 0.6rem;
+    color: var(--color-info-content);
+    font-size: 0.95rem;
+}
+
+@media screen and (max-width: 600px) {
+    .waitlist-form input[type="email"] { flex-basis: 100%; }
+    .waitlist-form .btn--primary { width: 100%; }
+    .waitlist-widget { padding: 1rem; }
+}
+
+/* Terminal demo styles (scoped) */
+.terminal-wrapper { display:flex; justify-content:center; margin: 2.5rem 0; }
+.terminal-container {
+    width: 880px;
+    max-width: calc(100% - 48px);
+    height: 420px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
+}
+.terminal-container .terminal_toolbar {
+    display: flex;
+    height: 40px;
+    align-items: center;
+    padding: 0 12px;
+    box-sizing: border-box;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background: linear-gradient(#504b45 0%, #3c3b37 100%);
+}
+.terminal-container .butt { display:flex; align-items:center; margin-top: 10px;}
+.terminal-container .btn {
+    display:flex; justify-content:center; align-items:center; padding:0; margin-right:8px;
+    font-size:12px; height:16px; width:16px; box-sizing:border-box; border:none; border-radius:100%;
+    background: linear-gradient(#7d7871 0%, #595953 100%);
+    text-shadow: 0px 1px 0px rgba(255,255,255,0.2);
+    box-shadow: 0px 0px 1px 0px #41403A, 0px 1px 1px 0px #474642;
+}
+.terminal-container .btn-color { background: #ee411a; }
+.terminal-container .btn:hover { cursor:pointer; }
+.terminal-container .btn:focus { outline:none; }
+.terminal-container .user { color: #d5d0ce; margin-left: 10px; font-size:15px; line-height:16px; margin-top: 30px;}
+.terminal-container .terminal_body {
+    background: rgba(16,18,20,0.95);
+    height: calc(100% - 40px);
+    padding: 18px; /* bigger padding to look spacious */
+    font-size: 15px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    color: #dcdcdc;
+}
+.terminal-container .terminal_promt { display:flex; align-items:center; gap:8px; }
+.terminal-container .terminal_promt span { margin-left:0; }
+.terminal-container .terminal_user { color: #7eda28; font-weight:600; }
+.terminal-container .terminal_location { color: #4878c0; }
+.terminal-container .terminal_bling { color: #dddddd; }
+.terminal-container .terminal_cursor { display:block; width:7px; height:18px; margin-left:8px; background:#ffffff; animation: terminalCurBlink 1200ms linear infinite; border-radius:2px; }
+
+@keyframes terminalCurBlink {
+  0%,49% { background: #ffffff; }
+  60%,99% { background: transparent; }
+  100% { background: #ffffff; }
+}
+
+/* responsive tweaks */
+@media screen and (max-width: 1000px) {
+    .terminal-container { width: 680px; height: 320px; }
+}
+@media screen and (max-width: 700px) {
+    .terminal-container { width: calc(100% - 32px); height: 260px; }
+    .terminal-container .user { display:none; }
+}
+
+
+
+
+/* ===================================================================
+ * # SPOTIFY CARD
+ *
+ *
+ * ------------------------------------------------------------------- */
+
+ /* Spotify music card made by: csozi | Website: www.csozi.hu*/
+
+.card {
+    position: relative;
+    background: #191414;
+    border-radius: 10px;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 140px;
+}
+
+.top {
+    position: relative;
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.pfp {
+    position: relative;
+    height: 48px;
+    width: 48px;
+    background-color: #d2d2d2;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.title-1 {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.title-2 {
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.time {
+    width: 90%;
+    background-color: #5e5e5e;
+    height: 6px;
+    border-radius: 3px;
+    margin: 10px auto 4px auto;
+    position: relative;
+}
+
+.elapsed {
+    width: 42%;
+    background-color: #1db954;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.controls {
+    color: white;
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.volume {
+  height: 100%;
+  width: 48px;
+}
+
+.air {
+  height: 100%;
+  width: 48px;
+}
+
+.controls svg {
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.controls svg:hover {
+  color: #1db954;
+}
+
+.volume {
+  opacity: 0;
+  position: relative;
+  transition: 0.2s;
+}
+
+.volume .slider {
+  height: 4px;
+  background-color: #5e5e5e;
+  width: 80%;
+  border-radius: 2px;
+  margin-top: 8px;
+  margin-left: 10%;
+}
+
+.volume .slider .green {
+  background-color: #1db954;
+  height: 100%;
+  width: 80%;
+  border-radius: 3px;
+}
+
+.volume .circle {
+  background-color: white;
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  position: absolute;
+  right: 20%;
+  top: 60%;
+}
+
+.volume_button:hover ~ .volume {
+  opacity: 1;
+}
+
+.timetext {
+    color: #e6e6e6;
+    font-size: 11px;
+    position: relative;
+    margin: 6px 8px 0 8px;
+}
+
+.time_row {
+    display:flex;
+    width:90%;
+    justify-content:space-between;
+    margin: 0 auto 6px auto;
+}
+
+.time_now, .time_full { margin: 0; }
+
+.playing {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    gap: 2px;
+    width: 34px;
+    height: 20px;
+}
+
+.greenline {
+  background-color: #1db954;
+  height: 20px;
+  width: 2px;
+  position: relative;
+  transform-origin: bottom;
+}
+
+.line-1 {
+  animation: infinite playing 1s ease-in-out;
+  animation-delay: 0.2s;
+}
+
+.line-2 {
+  animation: infinite playing 1s ease-in-out;
+  animation-delay: 0.5s;
+}
+
+.line-3 {
+  animation: infinite playing 1s ease-in-out;
+  animation-delay: 0.6s;
+}
+
+.line-4 {
+  animation: infinite playing 1s ease-in-out;
+  animation-delay: 0s;
+}
+
+.line-5 {
+  animation: infinite playing 1s ease-in-out;
+  animation-delay: 0.4s;
+}
+
+.card {
+    align-items: center;
+    text-align: center;
+}
+
+/* layout: responsive grid for the 3-up cards inside the about section */
+.s-about .row.g-4 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.s-about .row.g-4 .col-md-4 {
+    flex: 1 1 280px;
+    max-width: 360px;
+    display: flex;
+}
+.s-about .row.g-4 .col-md-4 .card {
+    flex: 1 1 auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+}
+.card .top {
+    justify-content: center;
+    align-items: center;
+}
+.card-desc {
+    color: #cfcfcf;
+    font-size: 13px;
+    margin-top: 8px;
+    text-align: center;
+    max-width: 240px;
+    line-height: 1.25;
+}
+
+/* ensure svgs and controls scale down on small screens */
+.s-about .row.g-4 .card svg { width: 20px; height: 20px; }
+.s-about .row.g-4 .pfp .greenline { height: 18px; }
+
+
+/* =========================
+   FIXED TRANSPARENT NAVBAR
+========================= */
+
+/* default: transparent over hero */
+.simple-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  background: transparent;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* when scrolling over white sections */
+.simple-navbar.scrolled {
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+
+/* CENTERED CONTAINER (THIS FIXES EVERYTHING) */
+.nav-container {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* LOGO GROUP */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+}
+
+.logo-icon {
+  width: 50px;
+  height: auto;
+  margin-top: 30px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-top {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.logo-bottom {
+  font-size: 20px;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+#intro {
+  padding-top: 96px; /* adjust if needed */
+}
+
+/* footer */
+
+.site-footer {
+  background: #0a0a0a;
+  color: #cfcfcf;
+  padding: 80px 24px 30px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-col h4 {
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col li {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.footer-col a {
+  color: #cfcfcf;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: #ffffff;
+}
+
+.footer-brand .footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.footer-brand img {
+  width: 36px;
+  height: auto;
+}
+
+.footer-brand strong {
+  display: block;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.footer-brand span {
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+.footer-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.footer-bottom {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+  font-size: 13px;
+  color: #9a9a9a;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 14px 18px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+}
+
+
+
+
+@media screen and (max-width: 900px) {
+    .s-about .row.g-4 { gap: 14px; }
+    .s-about .row.g-4 .col-md-4 { flex: 1 1 220px; max-width: 300px; }
+    .card { min-height: 150px; padding: 10px; }
+}
+
+@media screen and (max-width: 520px) {
+    .s-about .row.g-4 { gap: 12px; }
+    .s-about .row.g-4 .col-md-4 { flex: 1 1 100%; max-width: 100%; }
+    .card { min-height: auto; }
+    .title-1 { font-size: 18px; }
+}
+
+@keyframes playing {
+  0% {
+    transform: scaleY(0.1);
+  }
+
+  33% {
+    transform: scaleY(0.6);
+  }
+
+  66% {
+    transform: scaleY(0.9);
+  }
+
+  100% {
+    transform: scaleY(0.1);
+  }
+}
+
+
