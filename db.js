@@ -14,12 +14,18 @@ const client = new MongoClient(uri, {
 let db;
 
 async function connectDB() {
-  if (db) return db;
+  try {
+    if (db) return db;
 
-  await client.connect();
-  db = client.db("DatabaseLKA");
-  console.log("MongoDB connected");
-  return db;
+    await client.connect();
+    db = client.db("DatabaseLKA");
+    console.log("MongoDB connected");
+    return db;
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    process.exit(1); // optional but recommended
+  }
 }
+
 
 module.exports = connectDB;

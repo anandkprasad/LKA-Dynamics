@@ -1021,3 +1021,85 @@ ssInit();
 
 })(document.documentElement);
 
+/* ------------------------------------------------------------------
+ * Waitlist widget (VISUAL ONLY)
+ * - no form logic
+ * - no storage
+ * - animated hardcoded people
+ * ------------------------------------------------------------------ */
+(function () {
+    'use strict';
+
+    function initWaitlistVisual() {
+        const avatarsEl = document.getElementById('waitlist-avatars');
+        const countEl = document.getElementById('waitlist-count');
+
+        if (!avatarsEl) return;
+
+        // Hardcoded fake people (purely visual)
+        const PEOPLE = [
+            { skin: 'person-skin-light', hair: 'hair-black' },
+            { skin: 'person-skin-medium', hair: 'hair-brown' },
+            { skin: 'person-skin-dark', hair: 'hair-black' },
+            { skin: 'person-skin-light', hair: 'hair-blond' },
+            { skin: 'person-skin-medium', hair: 'hair-red' }
+        ];
+
+        avatarsEl.innerHTML = '';
+
+        PEOPLE.forEach((p, i) => {
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar person-avatar';
+
+            const plate = document.createElement('div');
+            plate.className = 'plate';
+
+            const face = document.createElement('div');
+            face.className = `person-face ${p.skin}`;
+
+            const hair = document.createElement('div');
+            hair.className = `person-hair ${p.hair}`;
+
+            const eyes = document.createElement('div');
+            eyes.className = 'person-eyes';
+            eyes.innerHTML = '<span class="eye"></span><span class="eye"></span>';
+
+            const mouth = document.createElement('div');
+            mouth.className = 'person-mouth';
+
+            face.appendChild(hair);
+            face.appendChild(eyes);
+            face.appendChild(mouth);
+            plate.appendChild(face);
+            avatar.appendChild(plate);
+            avatarsEl.appendChild(avatar);
+
+            // stagger animation
+            setTimeout(() => {
+                avatar.classList.add('avatar-pop');
+            }, i * 120);
+        });
+
+        // hardcoded count (marketing copy)
+        if (countEl) {
+            countEl.textContent = '200+ people on the waitlist';
+            countEl.classList.add('count-pulse');
+            setTimeout(() => countEl.classList.remove('count-pulse'), 600);
+        }
+
+        // subtle loop pulse (keeps it alive)
+        setInterval(() => {
+            const nodes = avatarsEl.querySelectorAll('.avatar');
+            nodes.forEach((n, i) => {
+                n.classList.remove('avatar-pop');
+                setTimeout(() => n.classList.add('avatar-pop'), i * 100);
+            });
+        }, 5000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initWaitlistVisual);
+    } else {
+        initWaitlistVisual();
+    }
+})();

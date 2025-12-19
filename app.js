@@ -19,11 +19,11 @@ var contactSchema = new mongoose.Schema({
 	country_code: String
 });
 
-var Contact = mongoose.model("Contact", contactSchema);
+
+
 
 app.use(bodyParser.urlencoded({extended:true}));
 
-connectDB();
 
 
 // Set EJS as view engine
@@ -37,6 +37,7 @@ app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {
+  
 	res.render('index');
 });
 
@@ -93,7 +94,10 @@ app.post("/waitlist", async (req, res) => {
 });
 
 
-
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
-});
+(async () => {
+  await connectDB();  
+  
+  app.listen(PORT, () => {
+    console.log("Server is running on port");
+  });
+})();
