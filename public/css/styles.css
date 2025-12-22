@@ -4481,10 +4481,12 @@ img.u-pull-left {
 
 .waitlist-title {
     margin: 0 0 0.6rem 0;
-    font-size: calc(var(--text-display-1) * 0.28);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     color: var(--color-white);
     font-weight: 800;
     letter-spacing: -0.5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .waitlist-desc {
@@ -4494,6 +4496,8 @@ img.u-pull-left {
     max-width: 720px;
     margin-left: auto;
     margin-right: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .waitlist-form {
