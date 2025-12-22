@@ -1,31 +1,25 @@
 // Node.js server with EJS and static assets
-const express = require('express');
-const path = require('path');
-const app = express();
-const mongoose = require("mongoose");
-const PORT = process.env.PORT || 3000;
-
-
-var bodyParser  = require("body-parser");
+const express = require("express");
+const path = require("path");
 const connectDB = require("./db");
 
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({extended:true}));
-
-
-// Set EJS as view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+// ================== Middleware ==================
+app.use(express.urlencoded({ extended: true })); // replaces body-parser
 app.use(express.json());
 
+// Static files
+app.use(express.static(path.join(__dirname, "public")));
 
-// Routes
-app.get('/', (req, res) => {
-  
-	res.render('index');
+// View engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// ================== Routes ==================
+app.get("/", (req, res) => {
+  res.render("index");
 });
 
 app.post("/contact", async (req, res) => {
@@ -42,13 +36,13 @@ app.post("/contact", async (req, res) => {
     await contacts.insertOne({
       name,
       email,
-      phone: `${country_code}${phone}`,
+      phone: `${country_code || ""}${phone}`,
       message,
       createdAt: new Date(),
       source: "website"
     });
 
-            res.redirect("/");
+    res.redirect("/");
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -72,20 +66,22 @@ app.post("/waitlist", async (req, res) => {
       source: "homepage"
     });
 
-    res.status(200).json({ success: true });
-
+    res.json({ success: true });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
+// ================== 404 ==================
+app.use((req, res) => {
+  res.status(404).send("Page not found");
+});
 
-
+// ================== Start Server ==================
 (async () => {
-  await connectDB();  
-  
+  await connectDB();
   app.listen(PORT, () => {
-    console.log("Server is running on port");
+    console.log(`Server running on port ${PORT}`);
   });
 })();
