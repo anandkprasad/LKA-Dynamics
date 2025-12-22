@@ -4370,6 +4370,67 @@ img.u-pull-left {
     }
 }
 
+/* ===== Mobile: Logo only header ===== */
+@media (max-width: 768px) {
+
+    /* Show hamburger menu */
+    .nav-toggle {
+        display: block !important;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        margin-left: auto; /* push to right */
+    }
+
+    .nav-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #fff;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    .nav-toggle:focus {
+        outline: none;
+        background: none;
+    }
+
+    /* Hide nav links by default */
+    .nav-links {
+        display: none !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Show when open */
+    .nav-links.open {
+        display: flex !important;
+    }
+
+    /* Center logo nicely */
+    .nav-container {
+        justify-content: space-between; /* logo left, hamburger right */
+        position: relative; /* for absolute dropdown */
+    }
+
+    .nav-logo {
+        margin: 0;
+    }
+}
+
+
+
+
 /* -------------------------------------------------------------------
  * Waitlist CTA styles
  * Minimal, non-invasive styles for the new Join the waitlist CTA and arrow
@@ -4411,7 +4472,7 @@ img.u-pull-left {
     max-width: 760px;
     background: linear-gradient(180deg, rgba(12,14,18,0.92), rgba(22,24,28,0.88));
     border: 1px solid rgba(255,255,255,0.12); /* stronger white border */
-    padding: 2rem 2.2rem;
+    padding: 3rem 3rem;
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(2,6,12,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
@@ -4961,6 +5022,8 @@ img.u-pull-left {
 .s-about .row.g-4 .pfp .greenline { height: 18px; }
 
 
+
+
 /* =========================
    FIXED TRANSPARENT NAVBAR
 ========================= */
@@ -5052,6 +5115,11 @@ img.u-pull-left {
 
 .nav-links a:hover {
   opacity: 1;
+}
+
+/* Hamburger toggle - hidden by default (desktop) */
+.nav-toggle {
+  display: none;
 }
 
 #intro {

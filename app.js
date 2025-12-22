@@ -6,24 +6,11 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3000;
 
 
-
 var bodyParser  = require("body-parser");
 const connectDB = require("./db");
 
 
-var contactSchema = new mongoose.Schema({
-   	name:String,
-    email: String,
-    phone: String,
-	message:String,
-	country_code: String
-});
-
-
-
-
 app.use(bodyParser.urlencoded({extended:true}));
-
 
 
 // Set EJS as view engine
@@ -92,6 +79,7 @@ app.post("/waitlist", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
 
 
 (async () => {
